@@ -19,7 +19,6 @@ const Login = () => {
   } = useForm<formValues>();
 
   const onSubmit: SubmitHandler<formValues> = (data) => {
-    console.log(data);
     login(data);
   };
   return (

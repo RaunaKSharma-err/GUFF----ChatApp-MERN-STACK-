@@ -10,6 +10,8 @@ type authStore = {
   checkAuth: () => Promise<void>;
   signup: (data: object) => Promise<void>;
   login: (data: object) => Promise<void>;
+  logout: () => Promise<void>;
+  updateProfile: (data: string) => Promise<void>;
 };
 export const useAuthStore = create<authStore>((set) => ({
   authUser: null,
@@ -54,6 +56,32 @@ export const useAuthStore = create<authStore>((set) => ({
       toast.error("Account doestn't exists!");
     } finally {
       set({ isLoggingIn: false });
+    }
+  },
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({ authUser: null });
+      toast.success("Logged out successfully");
+    } catch (error) {
+      console.log("Error in logout", error);
+      toast.error("Logout problem");
+    }
+  },
+
+  updateProfile: async (data: string) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.put("/auth/update-profile", {
+        profilePic: data,
+      });
+      set({ authUser: res.data });
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      console.log("error in update profile:", error);
+      toast.error("failed to upload profile picture!");
+    } finally {
+      set({ isUpdatingProfile: false });
     }
   },
 }));
