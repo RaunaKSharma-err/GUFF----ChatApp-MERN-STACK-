@@ -31,8 +31,8 @@ const Profile = () => {
   };
   return (
     <>
-      <div className="h-full w-full flex flex-col justify-center items-center my-12 ">
-        <div className="card bg-base-300 w-130 h-[370px] shadow-xl ">
+      <div className="h-[90vh] w-full flex flex-col justify-center items-center ">
+        <div className="card bg-base-300 w-130 h-[340px] shadow-xl ">
           <div className="flex flex-col justify-center items-center gap-4">
             <h1 className="font-bold text-2xl mt-2">Profile</h1>
             <h2 className="text-[13px]">Your profile information</h2>
@@ -99,7 +99,10 @@ const Profile = () => {
         <div className="card bg-base-300 w-130 h-[130px] shadow-xl mt-3 p-3">
           <h1 className="text-md pl-2 mb-2">Account Information</h1>
           <p className="flex justify-between p-2 border-b-[1px]">
-            Member since <span className="text-right">123456</span>
+            Member since{" "}
+            <span className="text-right text-[13px]">
+              {authUser.createdAt.split("T")[0]}
+            </span>
           </p>
           <p className="flex justify-between p-2">
             Account status{" "}

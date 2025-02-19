@@ -9,46 +9,51 @@ import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
+import { useThemeStore } from "./store/useThemeStore";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingUp } = useAuthStore();
+  const { theme } = useThemeStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  if (isCheckingUp && !authUser) {
-    <div className="flex justify-center items-center h-screen z-20">
-      <Loader className="size-10 animate-spin" />
-    </div>;
-  }
+  if (isCheckingUp && !authUser)
+    return (
+      <div className="flex justify-center items-center h-screen z-20">
+        <Loader className="size-10 animate-spin" />
+      </div>
+    );
 
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={authUser ? <Home /> : <Navigate to={"/login"} />}
-        />
-        <Route
-          path="/signup"
-          element={!authUser ? <Signup /> : <Navigate to={"/"} />}
-        />
-        <Route
-          path="/login"
-          element={!authUser ? <Login /> : <Navigate to={"/"} />}
-        />
-        <Route
-          path="/setting"
-          element={authUser ? <Setting /> : <Navigate to={"/login"} />}
-        />
-        <Route
-          path="/profile"
-          element={authUser ? <Profile /> : <Navigate to={"/login"} />}
-        />
-      </Routes>
-      <Toaster position="top-right" reverseOrder={false} />
+      <div data-theme={theme}>
+        <Navbar />
+        <Routes>
+          <Route
+            path="/"
+            element={authUser ? <Home /> : <Navigate to={"/login"} />}
+          />
+          <Route
+            path="/signup"
+            element={!authUser ? <Signup /> : <Navigate to={"/"} />}
+          />
+          <Route
+            path="/login"
+            element={!authUser ? <Login /> : <Navigate to={"/"} />}
+          />
+          <Route
+            path="/setting"
+            element={authUser ? <Setting /> : <Navigate to={"/login"} />}
+          />
+          <Route
+            path="/profile"
+            element={authUser ? <Profile /> : <Navigate to={"/login"} />}
+          />
+        </Routes>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
     </>
   );
 };
