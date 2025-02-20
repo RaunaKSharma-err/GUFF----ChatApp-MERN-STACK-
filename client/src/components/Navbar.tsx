@@ -50,7 +50,7 @@ const Navbar = () => {
                 <img
                   alt="User Avatar"
                   src={authUser.profilePic || "/default.png"}
-                  className="rounded-full"
+                  className="rounded-full w-[80px] h-[40px]"
                 />
               </div>
             </button>

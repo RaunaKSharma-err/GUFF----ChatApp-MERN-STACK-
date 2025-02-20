@@ -1,6 +1,15 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
+import { User } from "lucide-react";
+
+type User = {
+  _id: string;
+  fullName: string;
+  profilePic?: string;
+  isOnline?: boolean;
+};
+
 type authStore = {
   authUser: any;
   isSigningUp: boolean;
@@ -12,6 +21,7 @@ type authStore = {
   login: (data: object) => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (data: string) => Promise<void>;
+  onlineUsers: User[];
 };
 export const useAuthStore = create<authStore>((set) => ({
   authUser: null,
@@ -19,6 +29,8 @@ export const useAuthStore = create<authStore>((set) => ({
   isLoggingIn: false,
   isUpdatingProfile: false,
   isCheckingUp: true,
+  onlineUsers: [],
+
   checkAuth: async () => {
     try {
       const response = await axiosInstance.get("/auth/check");

@@ -2,15 +2,22 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 
+type User = {
+  _id: string;
+  fullName: string;
+  profilePic?: string;
+  isOnline?: boolean;
+};
+
 type chatStore = {
   messages: string[];
-  users: string[];
-  selectedUser: string | null;
+  users: User[];
+  selectedUser: User | null;
   isUserLoading: boolean;
   isMessageLoading: boolean;
   getUsers: () => Promise<void>;
-  getMessages: (data: number) => Promise<void>;
-  setSelectedUser: (data: string) => void;
+  getMessages: (data: string | undefined) => Promise<void>;
+  setSelectedUser: (data: User) => void;
 };
 
 export const UseChatStore = create<chatStore>((set) => ({
@@ -33,7 +40,7 @@ export const UseChatStore = create<chatStore>((set) => ({
     }
   },
 
-  getMessages: async (userId: number) => {
+  getMessages: async (userId) => {
     set({ isMessageLoading: true });
     try {
       const response = await axiosInstance.get(`/message/${userId}`);
@@ -46,7 +53,7 @@ export const UseChatStore = create<chatStore>((set) => ({
     }
   },
 
-  setSelectedUser: (selectedUser: string) => {
-    set({ selectedUser });
+  setSelectedUser: (selectedUser: User) => {
+    set({ selectedUser: selectedUser });
   },
 }));
