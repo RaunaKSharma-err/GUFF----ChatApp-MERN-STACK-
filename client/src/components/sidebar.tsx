@@ -8,6 +8,7 @@ const Sidebar = () => {
   const { selectedUser, isUserLoading, users, getUsers, setSelectedUser } =
     UseChatStore();
   const { onlineUsers } = useAuthStore();
+  console.log(users);
 
   useEffect(() => {
     getUsers();
@@ -54,7 +55,7 @@ const Sidebar = () => {
                   alt=""
                   className="size-8 mx-2"
                 />
-                {onlineUsers.includes((user._id)) && (
+                {onlineUsers.includes(user._id) && (
                   <span className="absolute bottom-2 left-8 size-2 bg-green-500 rounded-full ring-2 ring-zinc-900" />
                 )}
                 <div className=" w-full text-left hidden lg:block min-w-0">

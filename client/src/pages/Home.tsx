@@ -18,7 +18,7 @@ const Home = () => {
               <div className="flex flex-col gap-4 justify-center items-center">
                 <MessageSquareQuote className="text-amber-200 animate-bounce" />
                 <p className="font-bold text-amber-200">Welcome to GUFF!</p>
-                <p className="text-amber-200 text-[10px]">
+                <p className="text-amber-200 text-[clamp(0.5rem,1vw,2rem)]">
                   Select a conversation from sidebar to start chatting
                 </p>
               </div>
