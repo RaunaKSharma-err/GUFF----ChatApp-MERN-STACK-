@@ -15,14 +15,17 @@ const Sidebar = () => {
   }, [getUsers]);
 
   return (
-    <div className="h-full w-[25%] min-w-[47px] bg-base-200 rounded-l-lg">
-      <div className="w-full h-[70px] flex flex-col  justify-center gap-3 pl-3">
-        <div className="flex gap-1">
+    <div className="h-full w-[25%] min-w-[47px] bg-base-300 rounded-l-lg">
+      <div className="w-full h-[70px] flex flex-col mb-3 justify-center gap-3 pl-3">
+        <div className="flex gap-1 mt-3 ml-2">
           <Users className="size-5 text-amber-200" />
-          <p className="text-amber-200 text-[13px] hidden lg:block">Contacts</p>
+          <p className="text-amber-200 font-medium hidden lg:block">Contacts</p>
         </div>
         <div className="flex gap-2 text-[12px] ">
-          <input type="checkbox" className="hidden lg:block" />
+          <input
+            type="checkbox"
+            className="hidden lg:block checkbox checkbox-sm"
+          />
           <p className="text-amber-200 hidden lg:block">
             Online only
             <span className="pl-2 text-[10px] text-slate-400">
@@ -42,10 +45,10 @@ const Sidebar = () => {
               <button
                 key={user._id}
                 onClick={() => setSelectedUser(user)}
-                className={`w-full mt-0.5 h-12 flex justify-between items-center cursor-pointer hover:bg-base-300 transition-colors 
+                className={`w-full mt-0.5 h-12 flex justify-between items-center cursor-pointer hover:bg-base-200 transition-colors 
                        relative mx-auto lg:mx-0 ${
                          selectedUser?._id === user._id
-                           ? "bg-base-300 ring-1 ring-base-300"
+                           ? "bg-base-200 ring-1 ring-base-200"
                            : ""
                        }
                       `}
@@ -53,14 +56,14 @@ const Sidebar = () => {
                 <img
                   src={user.profilePic || "/default.png"}
                   alt=""
-                  className="size-8 mx-2"
+                  className="size-9 mx-2 rounded-full"
                 />
                 {onlineUsers.includes(user._id) && (
                   <span className="absolute bottom-2 left-8 size-2 bg-green-500 rounded-full ring-2 ring-zinc-900" />
                 )}
                 <div className=" w-full text-left hidden lg:block min-w-0">
-                  <p className="text-amber-200 text-[11px]">{user.fullName}</p>
-                  <p className="text-[8px]">
+                  <p className="text-amber-200 text-[14px]">{user.fullName}</p>
+                  <p className="text-[10px]">
                     {onlineUsers.includes(user._id) ? "Online" : "Offline"}
                   </p>
                 </div>

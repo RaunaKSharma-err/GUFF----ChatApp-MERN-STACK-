@@ -2,7 +2,7 @@ import { Send } from "lucide-react";
 
 const ChatInput = () => {
   return (
-    <div className="p-4 border-t border-base-300 bg-base-100">
+    <div className="p-4 border-t border-base-300 bg-base-300 rounded-lg">
       <div className="flex gap-2">
         <input
           type="text"

@@ -17,7 +17,7 @@ const ChatContainer = () => {
     <>
       <div className="w-full h-full flex flex-col">
         <ChatHeader />
-        <div className="w-full h-full">
+        <div className="w-full h-full bg-base-200">
           <div className="chat chat-start p-3">
             <div className="chat-image avatar">
               <div className="w-10 rounded-full">
