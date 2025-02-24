@@ -11,7 +11,7 @@ const Home = () => {
       <div className="w-full h-full flex justify-center items-center ">
         <div className="w-[70vw] h-[80vh] mt-9 flex justify-between rounded-lg shadow-2xs bg-base-300">
           <Sidebar />
-          <div className="h-full w-[100%] flex justify-center items-center">
+          <div className="h-full w-[100%] flex justify-center items-center rounded-r-lg">
             {selectedUser ? (
               <ChatContainer />
             ) : (

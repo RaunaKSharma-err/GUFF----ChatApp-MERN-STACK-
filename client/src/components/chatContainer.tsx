@@ -2,22 +2,32 @@ import { useEffect } from "react";
 import { UseChatStore } from "../store/useChatStore";
 import { ChatHeader } from "./ChatHeader";
 import ChatInput from "./ChatMessage";
+import MessageSkeleton from "./skeleton/messageSkeleton";
+import "../App.css";
 
 const ChatContainer = () => {
-  const { isMessageLoading, selectedUser, getMessages, messages } =
-    UseChatStore();
+  const { isMessageLoading, selectedUser, getMessages } = UseChatStore();
 
   useEffect(() => {
     getMessages(selectedUser?._id);
   }, [getMessages, selectedUser?._id]);
 
-  if (isMessageLoading) return <div>loading...</div>;
+  if (isMessageLoading)
+    return (
+      <>
+        <div className="w-full h-full flex flex-col bg-base-200 overflow-auto rounded-r-lg">
+          <ChatHeader />
+          <MessageSkeleton />
+          <ChatInput />
+        </div>
+      </>
+    );
 
   return (
     <>
       <div className="w-full h-full flex flex-col">
         <ChatHeader />
-        <div className="w-full h-full bg-base-200">
+        <div className="w-full h-[396px] bg-base-200 overflow-auto">
           <div className="chat chat-start p-3">
             <div className="chat-image avatar">
               <div className="w-10 rounded-full">

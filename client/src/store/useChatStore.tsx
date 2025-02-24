@@ -18,9 +18,10 @@ type chatStore = {
   getUsers: () => Promise<void>;
   getMessages: (data: string | undefined) => Promise<void>;
   setSelectedUser: (data: User | null) => void;
+  sendMessages: (messageData: any) => Promise<void>;
 };
 
-export const UseChatStore = create<chatStore>((set) => ({
+export const UseChatStore = create<chatStore>((set, get) => ({
   messages: [],
   users: [],
   selectedUser: null,
@@ -50,6 +51,20 @@ export const UseChatStore = create<chatStore>((set) => ({
       toast.error("Error in getting messages");
     } finally {
       set({ isMessageLoading: false });
+    }
+  },
+
+  sendMessages: async (messageData) => {
+    const { selectedUser, messages } = get();
+    try {
+      const response = await axiosInstance.get(
+        `/message/send${selectedUser?._id}`,
+        messageData
+      );
+      set({ messages: [...messages, response.data] });
+    } catch (error) {
+      console.log("Error in sending messages", error);
+      toast.error("Error in sending messages");
     }
   },
 

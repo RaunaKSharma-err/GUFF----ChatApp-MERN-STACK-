@@ -1,26 +1,26 @@
 const MessageSkeleton = () => {
-  const skeletonContacts = Array(4).fill(null);
+  const skeletonMessages = Array(4).fill(null);
 
   return (
-    <aside
-      className="h-87% w-18 lg:w-72 border-r border-base-300 
-      flex flex-col transition-all duration-200"
-    >
-      <div className="w-full py-3">
-        {skeletonContacts.map((_, idx) => (
-          <div key={idx} className="w-full p-3 flex items-center gap-3">
-            <div className="relative mx-auto lg:mx-0">
-              <div className="skeleton size-12 rounded-full" />
-            </div>
-
-            <div className="hidden lg:block text-left min-w-0 flex-1">
-              <div className="skeleton h-4 w-32 mb-2" />
-              <div className="skeleton h-3 w-16" />
+    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      {skeletonMessages.map((_, idx) => (
+        <div key={idx} className={`chat ${idx % 2 === 0 ? "chat-start" : "chat-end"}`}>
+          <div className="chat-image avatar">
+            <div className="size-10 rounded-full">
+              <div className="skeleton w-full h-full rounded-full" />
             </div>
           </div>
-        ))}
-      </div>
-    </aside>
+
+          <div className="chat-header mb-1">
+            <div className="skeleton h-4 w-16" />
+          </div>
+
+          <div className="chat-bubble bg-transparent p-0">
+            <div className="skeleton h-16 w-[200px]" />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 

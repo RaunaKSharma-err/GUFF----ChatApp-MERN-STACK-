@@ -6,7 +6,7 @@ export const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = UseChatStore();
   const { onlineUsers } = useAuthStore();
   return (
-    <div className="bg-base-300 px-4 py-3 border-b border-base-300 flex justify-between rounded-lg">
+    <div className="bg-base-300 px-4 py-3 border-b border-base-300 flex justify-between rounded-r-lg">
       <div className="flex items-center gap-3">
         <img
           src={selectedUser?.profilePic || "/default.png"}
@@ -14,7 +14,9 @@ export const ChatHeader = () => {
           className="size-12 mx-1 rounded-full"
         />
         <div>
-          <h3 className="font-medium text-[clamp(0.6rem,1vw,2rem)]">{selectedUser?.fullName}</h3>
+          <h3 className="font-medium text-[clamp(0.6rem,1vw,2rem)]">
+            {selectedUser?.fullName}
+          </h3>
           <p className="text-[clamp(0.5rem,0.8vw,2rem)] text-base-content/70">
             {onlineUsers.includes(selectedUser?._id ?? "")
               ? "online"
