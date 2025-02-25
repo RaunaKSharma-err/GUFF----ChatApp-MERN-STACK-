@@ -2,6 +2,11 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 
+type message = {
+  text: string;
+  image: string | undefined;
+};
+
 type User = {
   _id: string;
   fullName: string;
@@ -18,7 +23,7 @@ type chatStore = {
   getUsers: () => Promise<void>;
   getMessages: (data: string | undefined) => Promise<void>;
   setSelectedUser: (data: User | null) => void;
-  sendMessages: (messageData: any) => Promise<void>;
+  sendMessages: (messageData: message) => Promise<void>;
 };
 
 export const UseChatStore = create<chatStore>((set, get) => ({
@@ -57,7 +62,7 @@ export const UseChatStore = create<chatStore>((set, get) => ({
   sendMessages: async (messageData) => {
     const { selectedUser, messages } = get();
     try {
-      const response = await axiosInstance.get(
+      const response = await axiosInstance.post(
         `/message/send${selectedUser?._id}`,
         messageData
       );
