@@ -3,8 +3,10 @@ import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 
 type message = {
+  senderId: string;
   text: string;
   image: string | undefined;
+  createdAt: string;
 };
 
 type User = {
@@ -15,7 +17,7 @@ type User = {
 };
 
 type chatStore = {
-  messages: string[];
+  messages: message[];
   users: User[];
   selectedUser: User | null;
   isUserLoading: boolean;

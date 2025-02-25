@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
+import { User } from "lucide-react";
 
 type User = {
   _id: string;
@@ -23,7 +24,7 @@ type authStore = {
   onlineUsers: string[];
 };
 export const useAuthStore = create<authStore>((set) => ({
-  authUser: null,
+  authUser: User || null,
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
