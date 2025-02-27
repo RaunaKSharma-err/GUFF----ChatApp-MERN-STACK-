@@ -5,6 +5,7 @@ import ChatInput from "./ChatInput";
 import MessageSkeleton from "./skeleton/messageSkeleton";
 import "../App.css";
 import { useAuthStore } from "../store/useAuthStore";
+import formatTime from "../utils/formatTime";
 
 const ChatContainer = () => {
   const { isMessageLoading, selectedUser, getMessages, messages } =
@@ -36,7 +37,7 @@ const ChatContainer = () => {
               <div
                 key={i}
                 className={`chat ${
-                  v.senderId === authUser._id ? "chat-start" : "chat-end"
+                  v.senderId === authUser._id ? "chat-end" : "chat-start"
                 }  p-3`}
               >
                 <div className="chat-image avatar">
@@ -45,16 +46,16 @@ const ChatContainer = () => {
                       alt="Tailwind CSS chat bubble component"
                       src={
                         v.senderId === authUser._id
-                          ? authUser.profilePic 
+                          ? authUser.profilePic
                           : selectedUser?.profilePic || "/default.png"
                       }
                     />
                   </div>
                 </div>
                 <div className="chat-header">
-                  {selectedUser?.fullName}
-                  <time className="text-xs opacity-50">
-                    {v.createdAt.split("T")[0]}
+                  <p className=""> {selectedUser?.fullName}</p>
+                  <time className="text-[9px] opacity-50 pt-0.5">
+                    {formatTime(v.createdAt)}
                   </time>
                 </div>
                 <div className="chat-bubble">

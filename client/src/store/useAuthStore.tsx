@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { User } from "lucide-react";
+import { io } from "socket.io-client";
+const BASE_URL = "http://localhost:5000";
 
 type User = {
   _id: string;
@@ -22,19 +24,24 @@ type authStore = {
   logout: () => Promise<void>;
   updateProfile: (data: string) => Promise<void>;
   onlineUsers: string[];
+  socket: string | null;
+  connectSocket: () => void;
+  disconnectSocket: () => void;
 };
-export const useAuthStore = create<authStore>((set) => ({
+export const useAuthStore = create<authStore>((set, get) => ({
   authUser: User || null,
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
   isCheckingUp: true,
   onlineUsers: [],
+  socket: null,
 
   checkAuth: async () => {
     try {
       const response = await axiosInstance.get("/auth/check");
       set({ authUser: response.data });
+      get().connectSocket();
     } catch (error) {
       console.log("Error in checkAuth", error);
       set({ authUser: null });
@@ -49,6 +56,7 @@ export const useAuthStore = create<authStore>((set) => ({
       const response = await axiosInstance.post("/auth/signup", data);
       set({ authUser: response.data });
       toast.success("Account created successfully");
+      get().connectSocket();
     } catch (error) {
       console.log("Error in signup", error);
       toast.error("Account creation Failed!");
@@ -63,6 +71,8 @@ export const useAuthStore = create<authStore>((set) => ({
       const response = await axiosInstance.post("/auth/login", data);
       set({ authUser: response.data });
       toast.success("Logged in successfully");
+
+      get().connectSocket();
     } catch (error) {
       console.log("Error in login", error);
       toast.error("Account doestn't exists!");
@@ -75,6 +85,7 @@ export const useAuthStore = create<authStore>((set) => ({
       await axiosInstance.post("/auth/logout");
       set({ authUser: null });
       toast.success("Logged out successfully");
+      get().disconnectSocket();
     } catch (error) {
       console.log("Error in logout", error);
       toast.error("Logout problem");
@@ -96,4 +107,10 @@ export const useAuthStore = create<authStore>((set) => ({
       set({ isUpdatingProfile: false });
     }
   },
+  connectSocket: () => {
+    const { authUser } = get();
+    if (!authUser || get().authUser.socket?.connected) return;
+    const socket = io(BASE_URL);
+  },
+  disconnectSocket: () => {},
 }));
