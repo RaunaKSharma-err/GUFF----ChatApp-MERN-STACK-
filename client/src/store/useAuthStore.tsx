@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { User } from "lucide-react";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 const BASE_URL = "http://localhost:5000";
 
 type User = {
@@ -24,7 +24,7 @@ type authStore = {
   logout: () => Promise<void>;
   updateProfile: (data: string) => Promise<void>;
   onlineUsers: string[];
-  socket: string | null;
+  socket: Socket | null;
   connectSocket: () => void;
   disconnectSocket: () => void;
 };
@@ -108,9 +108,21 @@ export const useAuthStore = create<authStore>((set, get) => ({
     }
   },
   connectSocket: () => {
-    const { authUser } = get();
-    if (!authUser || get().authUser.socket?.connected) return;
-    const socket = io(BASE_URL);
+    const { authUser, socket } = get();
+    if (!authUser || socket?.connected) return;
+    const sockets = io(BASE_URL, {
+      query: {
+        userId: authUser._id,
+      },
+    });
+    socket?.connect();
+    set({ socket: sockets });
+
+    socket?.on("getOnlineUsers", (userIds) => {
+      set({ onlineUsers: userIds });
+    });
   },
-  disconnectSocket: () => {},
+  disconnectSocket: () => {
+    if (get().socket?.connected) get().socket?.disconnect();
+  },
 }));
