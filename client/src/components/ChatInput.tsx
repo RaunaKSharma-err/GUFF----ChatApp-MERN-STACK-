@@ -37,6 +37,8 @@ const ChatInput = () => {
       await sendMessages({
         text: text.trim(),
         image: imagePreview,
+        createdAt: "",
+        senderId: "",
       });
 
       settext("");

@@ -45,7 +45,6 @@ export const UseChatStore = create<chatStore>((set, get) => ({
       set({ users: response.data });
     } catch (error) {
       console.log("Error in getting users", error);
-      toast.error("Error in getting users");
     } finally {
       set({ isUserLoading: false });
     }
@@ -79,12 +78,12 @@ export const UseChatStore = create<chatStore>((set, get) => ({
   },
 
   subscribeToMessages: () => {
-    const { selectedUser, messages } = get();
+    const { selectedUser } = get();
     if (!selectedUser) return;
 
     const socket = useAuthStore.getState().socket;
     socket?.on("newMessages", (newMessage) => {
-      set({ messages: [...messages, newMessage] });
+      set({ messages: [...get().messages, newMessage] });
     });
   },
 

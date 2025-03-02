@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 type formValues = {
   email: string;
@@ -119,13 +120,15 @@ const Login = () => {
               <p>
                 Don't have an account?{" "}
                 <span className="text-blue-400 font-bold">
-                  <a href="/signup">signup</a>
+                  <Link to={"/signup"}>
+                    <button className="cursor-pointer">signup</button>
+                  </Link>
                 </span>
               </p>
             </div>
           </form>
         </div>
-        <div className="w-[100%] flex justify-center items-center bg-base-300 h-[90vh]">
+        <div className="w-[100%] justify-center items-center bg-base-300 h-[90vh]  lg:block hidden ">
           <div className="diff aspect-[16/14.3]">
             <div className="diff-item-1">
               <div className="bg-primary text-primary-content grid place-content-center text-9xl font-black">
