@@ -1,6 +1,6 @@
 import { Users } from "lucide-react";
 import { UseChatStore } from "../store/useChatStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SidebarSkeleton from "./skeleton/sidebarSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
 
@@ -8,7 +8,10 @@ const Sidebar = () => {
   const { selectedUser, isUserLoading, users, getUsers, setSelectedUser } =
     UseChatStore();
   const { onlineUsers } = useAuthStore();
-
+  const [showOnlineUserOnly, setShowOnlineUserOnly] = useState(false);
+  const filteredUser = showOnlineUserOnly
+    ? users.filter((user) => onlineUsers.includes(user._id))
+    : users;
   useEffect(() => {
     getUsers();
   }, [getUsers]);
@@ -22,6 +25,8 @@ const Sidebar = () => {
         </div>
         <div className="flex gap-2 text-[12px] ">
           <input
+            checked={showOnlineUserOnly}
+            onChange={(e) => setShowOnlineUserOnly(e.target.checked)}
             type="checkbox"
             className="hidden lg:block checkbox checkbox-sm"
           />
@@ -39,7 +44,7 @@ const Sidebar = () => {
         </div>
       ) : (
         <div className=" w-full h-[87%] overflow-auto scroll ">
-          {users.map((user) => {
+          {filteredUser.map((user) => {
             return (
               <button
                 key={user._id}
