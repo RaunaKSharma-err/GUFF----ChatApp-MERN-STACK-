@@ -31,9 +31,9 @@ const Sidebar = () => {
             className="hidden lg:block checkbox checkbox-sm"
           />
           <p className="text-amber-200 hidden lg:block">
-            Online only
+            Online
             <span className="pl-2 text-[10px] text-slate-400">
-              ( {onlineUsers.length} online )
+              ( {onlineUsers.length - 1} online )
             </span>
           </p>
         </div>
@@ -43,7 +43,7 @@ const Sidebar = () => {
           <SidebarSkeleton />
         </div>
       ) : (
-        <div className=" w-full h-[87%] overflow-auto scroll ">
+        <div className=" w-full h-[84%] overflow-y-auto scroll ">
           {filteredUser.map((user) => {
             return (
               <button
@@ -74,6 +74,11 @@ const Sidebar = () => {
               </button>
             );
           })}
+          {filteredUser.length === 0 && (
+            <p className="text-amber-200 text-center text-[14px]">
+              No online users
+            </p>
+          )}
         </div>
       )}
     </div>
