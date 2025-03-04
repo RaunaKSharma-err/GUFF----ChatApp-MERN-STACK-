@@ -77,7 +77,6 @@ const ChatContainer = () => {
                   </div>
                 </div>
                 <div className="chat-header">
-                  <p className=""> {selectedUser?.fullName}</p>
                   <time className="text-[9px] opacity-50 pt-0.5">
                     {formatTime(v.createdAt)}
                   </time>
