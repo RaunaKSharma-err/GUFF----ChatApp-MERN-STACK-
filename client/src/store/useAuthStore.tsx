@@ -78,7 +78,7 @@ export const useAuthStore = create<authStore>((set, get) => ({
       get().connectSocket();
     } catch (error) {
       console.log("Error in login", error);
-      toast.error("Account doestn't exists!");
+      toast.error("Invalid credentials");
     } finally {
       set({ isLoggingIn: false });
     }
